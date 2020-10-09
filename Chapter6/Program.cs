@@ -2,52 +2,50 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices.ComTypes;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace Chapter6 {
     class Program {
         static void Main(string[] args) {
-            #region 教科書
-            //整数の例
-            var numbers = new List<int> { 19, 23, 43, 43, 15, 22, 31, 32, 18, 23, 28, 13 };
 
-            var strings = numbers.Select(n => n.ToString("0000")).ToArray();
-            foreach (var str in strings) {
-                Console.Write(str + " ");
+            //練習問題
+            var numbers = new int[] { 5, 10, 17, 9, 3, 21, 10, 40, 21, 3, 35 };
+
+            //問題6.1
+            //(1)
+            var max = numbers.Where(n => n > 0).Max();
+            Console.WriteLine($"最大は{max}");
+
+            //(2)
+            var last2 = numbers.Select(n => numbers[numbers.Length-1]);
+
+            //Console.WriteLine($"最後から2番目は{numbers[numbers.Length - 2]}");
+
+            int pos = numbers.Length - 2;
+            foreach (var number in numbers.Skip(pos)) {
+                Console.Write(number + " ");
             }
-
-            //numbers.Distinct().Select(n => n.ToString("0000")).ToList().ForEach(s => Console.Write(s + " "));
-
-            //並べ替え
             Console.WriteLine();
-            var sortedNumbers = numbers.OrderBy(n => n);
-            foreach (var nums in sortedNumbers) {
-                Console.Write(nums + " ");
+
+            //(3)
+            var strNums = numbers.Select(name => name.ToString("000")).ToArray();
+            foreach (var item in strNums) {
+                Console.Write(item + " ");
             }
-
-            //文字数の例
-            var words = new List<string> {
-                "Microsoft","Apple","Google","Oracle","Facebook"};
-
-            var lower = words.Select(name => name.ToLower()).ToArray();
-
-            //オブジェクトの例
-            var books = Books.GetBooks();
-
-            //タイトルリスト
-            var titles = books.Select(name => name.Title);
-            foreach (var title in titles) {
-                Console.Write(title + "");
-            }
-
-            //ページ数の多い順に並び変え
             Console.WriteLine();
-            var sortedPages = books.OrderByDescending(n => n.Pages);
-            foreach (var nums in sortedPages) {
-                Console.WriteLine(nums.Title + " "+ nums.Pages);
+
+            //(4)
+            var min3 = numbers.OrderBy(n => n).Take(3);
+            foreach (var item in min3) {
+                Console.Write(item + " ");
             }
-            #endregion
+            Console.WriteLine();
+
+            //(5)
+            var over10 = numbers.Distinct().Count(n => n > 10);
+            Console.WriteLine($"10よりおおきいのは{over10}");
         }
     }
 }
