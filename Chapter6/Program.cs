@@ -48,11 +48,6 @@ namespace Chapter6 {
                 Console.WriteLine(nums.Title + " "+ nums.Pages);
             }
             #endregion
-
-            //練習問題
-            var numbers = new int[] { 5, 10, 17, 9, 3, 21, 10, 40, 21, 3, 35 };
-
-
         }
     }
 }
