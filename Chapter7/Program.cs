@@ -9,63 +9,66 @@ using System.Threading.Tasks;
 
 namespace Chapter7 {
     class Program {
+        static public char key;
 
         static void Main(string[] args) {
+            var text = "Cozy lummox gives smart squid who asks for job pen";
+            Exercise1_1(text);
+            Exercise1_2(text);
+        }
 
-            Console.WriteLine("**********************");
-            Console.WriteLine("* 辞書登録プログラム *");
-            Console.WriteLine("**********************");
+        static void Exercise1_1(string text) {
+            // ディクショナリの初期化
+            var dict = new Dictionary<char, int>() { };
 
-            int num;
-            Dictionary<string, List<string>> dict = new Dictionary<string, List<string>>() { };
-
-            do {
-                Console.WriteLine("1. 登録　2. 内容を表示　3. 終了");
-                var readnum = Console.ReadLine();
-                if (int.TryParse(readnum, out num)) {
-                    switch (num) {
-                        case 1:
-                            Registration(dict);
-                            break;
-                        case 2:
-                            Display(dict);
-                            break;
-                        case 3:
-                            Environment.Exit(0);
-                            break;
-                        default:
-                            break;
+            foreach (var ch in text) {
+                if (ch == ' ') {
+                    continue;
+                } else {
+                    if ('a' <= ch && ch <= 'z') {
+                        key = Char.ToUpper(ch);
+                    } else {
+                        key = ch;
                     }
                 }
-            } while (true);
-        }
 
-        static public void Registration(Dictionary<string, List<string>> dict) {
-            Console.Write("KEYを入力：");
-            var readKey = Console.ReadLine();
-
-            Console.Write("Valueを入力：");
-            var readValue = Console.ReadLine();
-
-            if (dict.ContainsKey(readKey)) {
-                dict[readKey].Add(readValue);
-            } else {
-                dict[readKey] = new List<string> { readValue };
-            }
-
-            Console.WriteLine("登録しました!");
-            Console.WriteLine();
-            return;
-        }
-
-        static public void Display(Dictionary<string, List<string>> dict) {
-            Console.WriteLine();
-            foreach (var item in dict) {
-                foreach (var term in item.Value) {
-                    Console.WriteLine("{0} : {1}", item.Key, term);
+                if (dict.ContainsKey(key)) {
+                    dict[key]++;
+                } else {
+                    dict.Add(key, 1);
                 }
             }
-            Console.WriteLine();
+
+            // ディクショナリの内容を列挙
+            foreach (var item in dict.OrderBy(x => x.Key)) {
+                Console.WriteLine("{0} : {1}", item.Key, item.Value);
+            }
+        }
+
+        static void Exercise1_2(string text) {
+            var chars = new SortedDictionary<char, int> {};
+            foreach (var item in text) {
+                if (item == ' ') {
+                    continue;
+                } else {
+                    if ('a' <= item && item <= 'z') {
+                        key = Char.ToUpper(item);
+                    } else {
+                        key = item;
+                    }
+                }
+
+                if (chars.ContainsKey(key)) {
+                    chars[key]++;
+                } else {
+                    chars.Add(key, 1);
+                }
+            }
+
+            // ディクショナリの内容を列挙
+            foreach (var item in chars) {
+                Console.WriteLine("{0} : {1}", item.Key, item.Value);
+            }
         }
 
         //static public void DuplicateKeySample() {
