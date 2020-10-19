@@ -12,88 +12,53 @@ namespace Chapter7 {
         static public char key;
 
         static void Main(string[] args) {
-            var text = "Cozy lummox gives smart squid who asks for job pen";
-            Exercise1_1(text);
-            Exercise1_2(text);
+            // コンストラクタ呼び出し
+            var abbrs = new Abbreviations();
+
+            // Addメソッドの呼び出し例
+            abbrs.Add("IOC", "国際オリンピック委員会");
+            abbrs.Add("NPT", "核兵器不拡散条約");
+
+            //問題7.2.3
+            //Countプロパティを使用して数を出力させる
+            Console.WriteLine(abbrs.Count);
+            //Removeメソッドを呼び出して削除
+            if (abbrs.Remove("NPT")) {
+                Console.WriteLine("削除成功");
+            } else {
+                Console.WriteLine("削除失敗");
+            }
+
+            // インデクサの利用例
+            var names = new[] { "WHO", "FIFA", "NPT", };
+            foreach (var name in names) {
+                var fullname = abbrs[name];
+                if (fullname == null)
+                    Console.WriteLine("{0}は見つかりません", name);
+                else
+                    Console.WriteLine("{0}={1}", name, fullname);
+            }
+            Console.WriteLine();
+
+            // ToAbbreviationメソッドの利用例
+            var japanese = "東南アジア諸国連合";
+            var abbreviation = abbrs.ToAbbreviation(japanese);
+            if (abbreviation == null)
+                Console.WriteLine("{0} は見つかりません", japanese);
+            else
+                Console.WriteLine("「{0}」の略語は {1} です", japanese, abbreviation);
+            Console.WriteLine();
+
+            // FindAllメソッドの利用例
+            foreach (var item in abbrs.FindAll("国際")) {
+                Console.WriteLine("{0}={1}", item.Key, item.Value);
+            }
+            Console.WriteLine();
+
+            foreach (var item in abbrs.Where(x => x.Key.Length == 3)) {
+                Console.WriteLine($"{item.Key} = {item.Value}");
+            }
+            
         }
-
-        static void Exercise1_1(string text) {
-            // ディクショナリの初期化
-            var dict = new Dictionary<char, int>() { };
-
-            foreach (var ch in text) {
-                if (ch == ' ') {
-                    continue;
-                } else {
-                    if ('a' <= ch && ch <= 'z') {
-                        key = Char.ToUpper(ch);
-                    } else {
-                        key = ch;
-                    }
-                }
-
-                if (dict.ContainsKey(key)) {
-                    dict[key]++;
-                } else {
-                    dict.Add(key, 1);
-                }
-            }
-
-            // ディクショナリの内容を列挙
-            foreach (var item in dict.OrderBy(x => x.Key)) {
-                Console.WriteLine("{0} : {1}", item.Key, item.Value);
-            }
-        }
-
-        static void Exercise1_2(string text) {
-            var chars = new SortedDictionary<char, int> {};
-            foreach (var item in text) {
-                if (item == ' ') {
-                    continue;
-                } else {
-                    if ('a' <= item && item <= 'z') {
-                        key = Char.ToUpper(item);
-                    } else {
-                        key = item;
-                    }
-                }
-
-                if (chars.ContainsKey(key)) {
-                    chars[key]++;
-                } else {
-                    chars.Add(key, 1);
-                }
-            }
-
-            // ディクショナリの内容を列挙
-            foreach (var item in chars) {
-                Console.WriteLine("{0} : {1}", item.Key, item.Value);
-            }
-        }
-
-        //static public void DuplicateKeySample() {
-        //    // ディクショナリの初期化
-        //    var dict = new Dictionary<string, List<string>>() {
-        //       { "PC", new List<string> { "パーソナル コンピュータ", "プログラム カウンタ", } },
-        //       { "CD", new List<string> { "コンパクト ディスク", "キャッシュ ディスペンサー", } },
-        //    };
-        //
-        //    // ディクショナリに追加
-        //    var key = "EC";
-        //    var value = "電子商取引";
-        //    if (dict.ContainsKey(key)) {
-        //        dict[key].Add(value);
-        //    } else {
-        //        dict[key] = new List<string> { value };
-        //    }
-        //
-        //    // ディクショナリの内容を列挙
-        //    foreach (var item in dict) {
-        //        foreach (var term in item.Value) {
-        //            Console.WriteLine("{0} : {1}", item.Key, term);
-        //        }
-        //    }
-        //}
-
     }
 }
