@@ -52,6 +52,12 @@ namespace SendMailApp {
                 sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
                 sc.Send(msg);
+
+                if (tbCc.Text != null) {
+                    msg = new MailMessage("ojsinfosys01@gmail.com", tbCc.Text);
+                    sc.Send(msg);
+                }
+
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
