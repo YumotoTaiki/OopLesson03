@@ -13,7 +13,7 @@ namespace Chapter5 {
             Console.Write("文字列2→");
             var str2 = Console.ReadLine().ToUpper();
 
-            if (String.Compare(str1,str2,ignoreCase:true) == 0)
+            if (String.Compare(str1, str2, ignoreCase: true) == 0)
                 Console.WriteLine("同じ");
             else
                 Console.WriteLine("違う");
@@ -79,5 +79,6 @@ namespace Chapter5 {
             }
         }
         #endregion*/
+        }
     }
 }
