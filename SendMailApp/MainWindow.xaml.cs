@@ -42,6 +42,12 @@ namespace SendMailApp {
         private void btOk_Click(object sender, RoutedEventArgs e) {
             try {
                 MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
+                if (tbCc.Text != "") {
+                    msg.CC.Add(tbCc.Text);
+                }
+                if (tbBcc.Text != "") {
+                    msg.Bcc.Add(tbCc.Text);
+                }
 
                 msg.Subject = tbTitle.Text;//件名
                 msg.Body = tbBody.Text;//本文
@@ -52,11 +58,7 @@ namespace SendMailApp {
                 sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
                 sc.Send(msg);
-
-                if (tbCc.Text != null) {
-                    msg = new MailMessage("ojsinfosys01@gmail.com", tbCc.Text);
-                    sc.Send(msg);
-                }
+                sc.SendMailAsync(msg);
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
