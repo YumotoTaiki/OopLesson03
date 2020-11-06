@@ -69,5 +69,19 @@ namespace SendMailApp {
         private void btCancel_Click(object sender, RoutedEventArgs e) {
             sc.SendAsyncCancel();
         }
+
+        private void btConfig_Click(object sender, RoutedEventArgs e) {
+            ConfigWindow configWindow = new ConfigWindow();
+            configWindow.Show();
+        }
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+
+        }
+
+        //設定データ更新
+        public bool UpdateStatus(Config cf) {
+            return true;
+        }
     }
 }
