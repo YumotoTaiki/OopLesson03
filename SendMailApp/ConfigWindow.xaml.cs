@@ -41,6 +41,7 @@ namespace SendMailApp {
                 tbPassWord.Password,
                 int.Parse(tbPort.Text),
                 cbSsl.IsChecked ?? false); //更新処理を呼び出す
+            this.Close();
         }
 
         //OKボタン
@@ -60,7 +61,13 @@ namespace SendMailApp {
             tbPort.Text = ctf.Port.ToString();
             tbUserName.Text = ctf.MailAddress;
             tbPassWord.Password = ctf.PassWord;
+            tbSender.Text = ctf.MailAddress;
             cbSsl.IsChecked = ctf.Ssl;
+            Config.GetInstance().DeSerialise();
+        }
+
+        private void Window_Closed(object sender, EventArgs e) {
+            Config.GetInstance().Serialise();
         }
     }
 }
