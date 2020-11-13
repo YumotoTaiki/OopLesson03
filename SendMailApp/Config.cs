@@ -62,16 +62,16 @@ namespace SendMailApp {
         }
 
         public void Serialise() { //シリアル化
-            using (var writer = XmlWriter.Create("Mail.xml")) {
-                var serializer = new XmlSerializer(MailMessage.GetType());
-                serializer.Serialize(writer, MailMessage);
+            using (var writer = XmlWriter.Create("config.xml")) {
+                var serializer = new XmlSerializer(instance.GetType());
+                serializer.Serialize(writer, instance);
             }
         }
 
         public void DeSerialise() {
-            using (var reader = XmlReader.Create("Mail.xml")) {
-                var serializer = new XmlSerializer(typeof(MailMessage));
-                var msg = serializer.Deserialize(reader) as MailMessage;
+            using (var reader = XmlReader.Create("config.xml")) {
+                var serializer = new XmlSerializer(typeof(Config));
+                instance = serializer.Deserialize(reader) as Config;
             }
         }
     }

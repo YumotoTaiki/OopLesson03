@@ -24,7 +24,7 @@ namespace SendMailApp {
 
         private void btDefault_Click(object sender, RoutedEventArgs e) {
             Config cf = (Config.GetInstance()).getDefaultStatus();
-            //Config defaultDate = cf.getDefaultStatus();
+            Config defaultDate = cf.getDefaultStatus();
 
             tbSmtp.Text = cf.Smtp;
             tbPort.Text = cf.Port.ToString();
@@ -44,6 +44,14 @@ namespace SendMailApp {
             this.Close();
         }
 
+        private void Window_Closed(object sender, EventArgs f) {
+            try {
+                Config.GetInstance().Serialise();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         //OKボタン
         private void btOK_Click(object sender, RoutedEventArgs e) {
             btApply_Click(sender, e); //更新処理を呼び出す
@@ -51,6 +59,7 @@ namespace SendMailApp {
 
         //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e) {
+            MessageBox.Show("正しい値を入力してください。","エラー");
             this.Close();
         }
 
@@ -63,11 +72,7 @@ namespace SendMailApp {
             tbPassWord.Password = ctf.PassWord;
             tbSender.Text = ctf.MailAddress;
             cbSsl.IsChecked = ctf.Ssl;
-            Config.GetInstance().DeSerialise();
-        }
-
-        private void Window_Closed(object sender, EventArgs e) {
-            Config.GetInstance().Serialise();
+            //Config.GetInstance().DeSerialise();
         }
     }
 }

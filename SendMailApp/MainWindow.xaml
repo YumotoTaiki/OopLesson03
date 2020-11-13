@@ -9,7 +9,8 @@
     <Grid Background="BlanchedAlmond">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="85*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="25*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
@@ -21,7 +22,9 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="件名："
                    FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,18,4,17"/>
-        <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="5"/>
+
+        <Label Content="添付ファイル" Grid.Row="0" Grid.Column="2" Height="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="To："
                    FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,18,3,17"/>
         <TextBox x:Name="tbTo" Grid.Row="1" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
@@ -35,7 +38,7 @@
                    FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,17,4,17"/>
         <TextBox x:Name="tbBody" Grid.Row="4" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
 
-        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="58,0,81,0">
+        <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="41,0,69,0" Width="245">
             <Button x:Name="btCancel" Content="キャンセル" FontSize="15" Width="100" Margin="10" Click="btCancel_Click"/>
             <Button x:Name="btOk" Content="送信" FontSize="15" Width="100" Margin="10" Click="btOk_Click"/>
         </StackPanel>
