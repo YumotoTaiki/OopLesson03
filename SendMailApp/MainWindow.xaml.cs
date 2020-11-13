@@ -74,6 +74,7 @@ namespace SendMailApp {
         //設定ボタンイベントハンドラ
         private void btConfig_Click(object sender, RoutedEventArgs e) {
             ConfigWindowShow();
+            this.Close();
         }
 
         //設定画面表示
@@ -87,15 +88,10 @@ namespace SendMailApp {
             try {
                 Config.GetInstance().DeSerialise(); //逆シリアル化　XML→オブジェクト
                 Config ctf = Config.GetInstance();
-                tbTo.Text = ctf.MailAddress;
             } catch (FileNotFoundException){
                 ConfigWindowShow();
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
-            }
-            if (tbTo.Text == "") {
-                ConfigWindowShow();
-                this.Close();
             }
         }
 

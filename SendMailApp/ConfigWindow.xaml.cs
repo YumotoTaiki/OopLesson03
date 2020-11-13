@@ -35,13 +35,19 @@ namespace SendMailApp {
 
         //適用(更新)
         private void btApply_Click(object sender, RoutedEventArgs e) {
-            (Config.GetInstance()).UpdateSatus(
+            if (tbSmtp.Text != "" && tbPort.Text != "" && tbUserName.Text != "" && tbPassWord.Password != "" && tbSender.Text != "") {
+                (Config.GetInstance()).UpdateSatus(
                 tbSmtp.Text,
                 tbUserName.Text,
                 tbPassWord.Password,
                 int.Parse(tbPort.Text),
                 cbSsl.IsChecked ?? false); //更新処理を呼び出す
-            this.Close();
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            } else {
+                MessageBox.Show("入力されていない項目があります。", "エラー");
+            }
         }
 
         private void Window_Closed(object sender, EventArgs f) {
@@ -59,8 +65,14 @@ namespace SendMailApp {
 
         //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e) {
-            MessageBox.Show("正しい値を入力してください。","エラー");
-            this.Close();
+            var str = MessageBox.Show("変更は保存されませんが戻りますか?",
+                "タイトル",
+                MessageBoxButton.OKCancel);
+            if (str == MessageBoxResult.OK) {
+                MainWindow mainWindow = new MainWindow();
+                mainWindow.Show();
+                this.Close();
+            }
         }
 
         //ロード時に一度だけ呼び出される
@@ -73,6 +85,14 @@ namespace SendMailApp {
             tbSender.Text = ctf.MailAddress;
             cbSsl.IsChecked = ctf.Ssl;
             //Config.GetInstance().DeSerialise();
+        }
+
+        private void TextChanged(object sender, TextChangedEventArgs e) {
+
+        }
+
+        private void PasswordChanged(object sender, RoutedEventArgs e) {
+
         }
     }
 }
