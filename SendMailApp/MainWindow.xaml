@@ -5,43 +5,47 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:SendMailApp"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="600" Loaded="Window_Loaded">
+        Title="MainWindow" Height="600" Width="900" Loaded="Window_Loaded">
     <Grid Background="BlanchedAlmond">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="10*"/>
             <ColumnDefinition Width="60*"/>
-            <ColumnDefinition Width="25*"/>
+            <ColumnDefinition Width="10*"/>
+            <ColumnDefinition Width="20*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="8*"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" Grid.Column="0" Text="件名："
-                   FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,18,4,17"/>
+                   FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
         <TextBox x:Name="tbTitle" Grid.Row="0" Grid.Column="1" Margin="5"/>
 
-        <Label Content="添付ファイル" Grid.Row="0" Grid.Column="2" Height="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+        <Label Content="添付ファイル" Grid.Row="0" Grid.Column="3" Height="26" VerticalAlignment="Center" HorizontalAlignment="Center"/>
         <TextBlock Grid.Row="1" Grid.Column="0" Text="To："
-                   FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,18,3,17"/>
-        <TextBox x:Name="tbTo" Grid.Row="1" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
+                   FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox x:Name="tbTo" Grid.Row="1" Grid.Column="1" Margin="5"/>
         <TextBlock Grid.Row="2" Grid.Column="0" Text="Cc："
-                   FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,18,4,17"/>
-        <TextBox x:Name="tbCc" Grid.Row="2" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
+                   FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox x:Name="tbCc" Grid.Row="2" Grid.Column="1" Margin="5"/>
         <TextBlock Grid.Row="3" Grid.Column="0" Text="Bcc："
-                   FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,17,4,17"/>
-        <TextBox x:Name="tbBcc" Grid.Row="3" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
+                   FontSize="15" VerticalAlignment="Center" HorizontalAlignment="Right"/>
+        <TextBox x:Name="tbBcc" Grid.Row="3" Grid.Column="1" Margin="5"/>
         <TextBlock Grid.Row="4" Grid.Column="0" Text="本文："
                    FontSize="20" VerticalAlignment="Center" HorizontalAlignment="Right" Margin="0,17,4,17"/>
-        <TextBox x:Name="tbBody" Grid.Row="4" Grid.Column="1" Margin="5" Grid.ColumnSpan="2"/>
+        <TextBox x:Name="tbBody" Grid.Row="4" Grid.Column="1" Margin="5" Grid.ColumnSpan="3"/>
 
         <StackPanel Grid.Row="5" Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Margin="41,0,69,0" Width="245">
             <Button x:Name="btCancel" Content="キャンセル" FontSize="15" Width="100" Margin="10" Click="btCancel_Click"/>
             <Button x:Name="btOk" Content="送信" FontSize="15" Width="100" Margin="10" Click="btOk_Click"/>
         </StackPanel>
         <Button x:Name="btConfig" Grid.Row="5" Margin="10" Content="設定" Click="btConfig_Click"/>
+        <ListBox  Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" VerticalAlignment="Center" Margin="5" Height="120"/>
+        <Button x:Name="btAddDate" Grid.Row="2" Grid.Column="2" Content="追加" Margin="5"/>
+        <Button x:Name="btErase" Grid.Row="3" Grid.Column="2" Content="削除" Margin="5"/>
     </Grid>
 </Window>

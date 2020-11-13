@@ -18,6 +18,9 @@ namespace SendMailApp {
     /// ConfigWindow.xaml の相互作用ロジック
     /// </summary>
     public partial class ConfigWindow : Window {
+
+        bool Change = false;
+
         public ConfigWindow() {
             InitializeComponent();
         }
@@ -65,10 +68,17 @@ namespace SendMailApp {
 
         //キャンセルボタン
         private void btCancel_Click(object sender, RoutedEventArgs e) {
-            var str = MessageBox.Show("変更は保存されませんが戻りますか?",
-                "タイトル",
+            if (Change == true) {
+                var str = MessageBox.Show("変更は保存されませんが戻りますか?",
+                "変更された項目があります。",
                 MessageBoxButton.OKCancel);
-            if (str == MessageBoxResult.OK) {
+                if (str == MessageBoxResult.OK) {
+                    Change = false;
+                    MainWindow mainWindow = new MainWindow();
+                    mainWindow.Show();
+                    this.Close();
+                }
+            } else {
                 MainWindow mainWindow = new MainWindow();
                 mainWindow.Show();
                 this.Close();
@@ -85,14 +95,15 @@ namespace SendMailApp {
             tbSender.Text = ctf.MailAddress;
             cbSsl.IsChecked = ctf.Ssl;
             //Config.GetInstance().DeSerialise();
+            Change = false;
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e) {
-
+            Change = true;
         }
 
         private void PasswordChanged(object sender, RoutedEventArgs e) {
-
+            Change = true;
         }
     }
 }
