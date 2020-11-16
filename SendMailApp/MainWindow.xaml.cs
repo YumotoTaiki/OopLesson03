@@ -54,8 +54,10 @@ namespace SendMailApp {
                 msg.Subject = tbTitle.Text;//件名
                 msg.Body = tbBody.Text;//本文
 
-                Attachment attachment = new System.Net.Mail.Attachment(LbAttach.Items[0].ToString());
-                msg.Attachments.Add(attachment);
+                for (int i = 0; i < LbAttach.Items.Count; i++) {
+                    Attachment attachment = new System.Net.Mail.Attachment(LbAttach.Items[i].ToString());
+                    msg.Attachments.Add(attachment);
+                }
 
                 sc.Host = "smtp.gmail.com";//SMTPサーバーの設定
                 sc.Port = 587;
@@ -129,7 +131,11 @@ namespace SendMailApp {
         }
 
         private void btErase_Click(object sender, RoutedEventArgs e) {
-
+            if (LbAttach.SelectedItems.Count == 0) {
+                MessageBox.Show("削除する項目を選択してください。");
+            } else {
+                LbAttach.Items.RemoveAt(LbAttach.SelectedIndex);
+            }
         }
     }
 }
