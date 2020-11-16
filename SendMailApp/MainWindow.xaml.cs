@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.IO;
@@ -53,12 +54,15 @@ namespace SendMailApp {
                 msg.Subject = tbTitle.Text;//件名
                 msg.Body = tbBody.Text;//本文
 
+                Attachment attachment = new System.Net.Mail.Attachment(LbAttach.Items[0].ToString());
+                msg.Attachments.Add(attachment);
+
                 sc.Host = "smtp.gmail.com";//SMTPサーバーの設定
                 sc.Port = 587;
                 sc.EnableSsl = true;
                 sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
-                sc.Send(msg);
+                //sc.Send(msg);
                 sc.SendMailAsync(msg);
 
             } catch (Exception ex) {
@@ -106,6 +110,26 @@ namespace SendMailApp {
         //設定データ更新
         public bool UpdateStatus(Config cf) {
             return true;
+        }
+
+        private void btAddDate_Click(object sender, RoutedEventArgs e) {
+
+            // ダイアログのインスタンスを生成
+            var dialog = new OpenFileDialog();
+
+            // ファイルの種類を設定
+            dialog.Filter = "全てのファイル (*.*)|*.*";
+
+            // ダイアログを表示する
+            if (dialog.ShowDialog() == true) {
+                LbAttach.Items.Add(dialog.FileName);
+                // 選択されたファイル名 (ファイルパス) をメッセージボックスに表示
+                //MessageBox.Show(dialog.FileName);
+            }
+        }
+
+        private void btErase_Click(object sender, RoutedEventArgs e) {
+
         }
     }
 }

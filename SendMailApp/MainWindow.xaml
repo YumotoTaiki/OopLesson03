@@ -44,8 +44,8 @@
             <Button x:Name="btOk" Content="送信" FontSize="15" Width="100" Margin="10" Click="btOk_Click"/>
         </StackPanel>
         <Button x:Name="btConfig" Grid.Row="5" Margin="10" Content="設定" Click="btConfig_Click"/>
-        <ListBox  Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" VerticalAlignment="Center" Margin="5" Height="120"/>
-        <Button x:Name="btAddDate" Grid.Row="2" Grid.Column="2" Content="追加" Margin="5"/>
-        <Button x:Name="btErase" Grid.Row="3" Grid.Column="2" Content="削除" Margin="5"/>
+        <ListBox x:Name="LbAttach" Grid.Row="1" Grid.Column="3" Grid.RowSpan="3" VerticalAlignment="Center" Margin="5" Height="120"/>
+        <Button x:Name="btAddDate" Grid.Row="2" Grid.Column="2" Content="追加" Margin="5" Click="btAddDate_Click"/>
+        <Button x:Name="btErase" Grid.Row="3" Grid.Column="2" Content="削除" Margin="5" Click="btErase_Click"/>
     </Grid>
 </Window>
