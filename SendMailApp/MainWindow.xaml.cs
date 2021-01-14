@@ -31,6 +31,18 @@ namespace SendMailApp {
             sc.SendCompleted += Sc_SendCompleted;
         }
 
+        //メインウィンドウが表示されるタイミングで呼び出される
+        public void Window_Loaded(object sender, RoutedEventArgs e) {
+            try {
+                Config.GetInstance().DeSerialise(); //逆シリアル化　XML→オブジェクト
+                Config ctf = Config.GetInstance();
+            } catch (FileNotFoundException) {
+                ConfigWindowShow();
+            } catch (Exception ex) {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         //送信完了イベント
         private void Sc_SendCompleted(object sender, AsyncCompletedEventArgs e) {
             if (e.Cancelled) {
@@ -80,25 +92,12 @@ namespace SendMailApp {
         //設定ボタンイベントハンドラ
         private void btConfig_Click(object sender, RoutedEventArgs e) {
             ConfigWindowShow();
-            this.Close();
         }
 
         //設定画面表示
         private static void ConfigWindowShow() {
             ConfigWindow configWindow = new ConfigWindow();
-            configWindow.Show();
-        }
-
-        //メインウィンドウが表示されるタイミングで呼び出される
-        public void Window_Loaded(object sender, RoutedEventArgs e) {
-            try {
-                Config.GetInstance().DeSerialise(); //逆シリアル化　XML→オブジェクト
-                Config ctf = Config.GetInstance();
-            } catch (FileNotFoundException){
-                ConfigWindowShow();
-            } catch (Exception ex) {
-                MessageBox.Show(ex.Message);
-            }
+            configWindow.ShowDialog();
         }
 
         private void Window_Closed(object sender, RoutedEventArgs e) {

@@ -52,7 +52,7 @@ namespace SendMailApp {
         }
 
         //設定データ更新
-        public bool UpdateSatus(string Smtp, string MailAddress, string PassWord, int Port, bool Ssl) {
+        public bool UpdateStatus(string Smtp, string MailAddress, string PassWord, int Port, bool Ssl) {
             this.Smtp = Smtp;
             this.MailAddress = MailAddress;
             this.PassWord = PassWord;

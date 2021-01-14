@@ -20,9 +20,23 @@ namespace SendMailApp {
     public partial class ConfigWindow : Window {
 
         bool Change = false;
+        Config ctf;
 
         public ConfigWindow() {
             InitializeComponent();
+        }
+
+        //ロード時に一度だけ呼び出される
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            ctf = Config.GetInstance();
+            tbSmtp.Text = ctf.Smtp;
+            tbPort.Text = ctf.Port.ToString();
+            tbUserName.Text = ctf.MailAddress;
+            tbPassWord.Password = ctf.PassWord;
+            tbSender.Text = ctf.MailAddress;
+            cbSsl.IsChecked = ctf.Ssl;
+            //Config.GetInstance().DeSerialise();
+            Change = false;
         }
 
         private void btDefault_Click(object sender, RoutedEventArgs e) {
@@ -36,23 +50,6 @@ namespace SendMailApp {
             cbSsl.IsChecked = cf.Ssl;
         }
 
-        //適用(更新)
-        private void btApply_Click(object sender, RoutedEventArgs e) {
-            if (tbSmtp.Text != "" && tbPort.Text != "" && tbUserName.Text != "" && tbPassWord.Password != "" && tbSender.Text != "") {
-                (Config.GetInstance()).UpdateSatus(
-                tbSmtp.Text,
-                tbUserName.Text,
-                tbPassWord.Password,
-                int.Parse(tbPort.Text),
-                cbSsl.IsChecked ?? false); //更新処理を呼び出す
-                MainWindow mainWindow = new MainWindow();
-                mainWindow.Show();
-                this.Close();
-            } else {
-                MessageBox.Show("入力されていない項目があります。", "エラー");
-            }
-        }
-
         private void Window_Closed(object sender, EventArgs f) {
             try {
                 Config.GetInstance().Serialise();
@@ -63,7 +60,27 @@ namespace SendMailApp {
 
         //OKボタン
         private void btOK_Click(object sender, RoutedEventArgs e) {
-            btApply_Click(sender, e); //更新処理を呼び出す
+            if (tbPassWord.Password == "") {
+                MessageBox.Show("パスワードを入力してください");
+            } else if (int.Parse(tbPort.Text) == 0) {
+                MessageBox.Show("ポート番号を入力してください");
+            } else if (tbSmtp.Text == "") {
+                MessageBox.Show("SMTPを入力してください");
+            } else if (tbUserName.Text == "") {
+                MessageBox.Show("メールアドレスを入力してください");
+            } else {
+                btApply_Click(sender, e);   //更新処理を呼び出す
+                this.Close();
+            }
+        }
+
+        //適用(更新)
+        private void btApply_Click(object sender, RoutedEventArgs e) {
+            (Config.GetInstance()).UpdateStatus(tbSmtp.Text,
+                                                tbUserName.Text,
+                                                tbPassWord.Password,
+                                                int.Parse(tbPort.Text),
+                                                cbSsl.IsChecked ?? false);  //更新処理を呼び出す
         }
 
         //キャンセルボタン
@@ -74,8 +91,6 @@ namespace SendMailApp {
                 MessageBoxButton.OKCancel);
                 if (str == MessageBoxResult.OK) {
                     Change = false;
-                    MainWindow mainWindow = new MainWindow();
-                    mainWindow.Show();
                     this.Close();
                 }
             } else {
@@ -83,19 +98,6 @@ namespace SendMailApp {
                 mainWindow.Show();
                 this.Close();
             }
-        }
-
-        //ロード時に一度だけ呼び出される
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
-            Config ctf = Config.GetInstance();
-            tbSmtp.Text = ctf.Smtp;
-            tbPort.Text = ctf.Port.ToString();
-            tbUserName.Text = ctf.MailAddress;
-            tbPassWord.Password = ctf.PassWord;
-            tbSender.Text = ctf.MailAddress;
-            cbSsl.IsChecked = ctf.Ssl;
-            //Config.GetInstance().DeSerialise();
-            Change = false;
         }
 
         private void TextChanged(object sender, TextChangedEventArgs e) {
