@@ -57,7 +57,7 @@ namespace SendMailApp {
         private void btOk_Click(object sender, RoutedEventArgs e) {
             try {
                 Config ctf = Config.GetInstance();
-                MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
+                MailMessage msg = new MailMessage(ctf.MailAddress, tbTo.Text);
 
                 if (tbCc.Text != "") {
                     msg.CC.Add(tbCc.Text);
