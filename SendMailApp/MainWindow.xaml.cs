@@ -25,6 +25,8 @@ namespace SendMailApp {
     public partial class MainWindow : Window {
 
         SmtpClient sc = new SmtpClient();
+        public System.Net.Mail.MailAddressCollection CC { get; }
+        public System.Net.Mail.MailAddressCollection Bcc { get; }
 
         public MainWindow() {
             InitializeComponent();
@@ -35,7 +37,6 @@ namespace SendMailApp {
         public void Window_Loaded(object sender, RoutedEventArgs e) {
             try {
                 Config.GetInstance().DeSerialise(); //逆シリアル化　XML→オブジェクト
-                Config ctf = Config.GetInstance();
             } catch (FileNotFoundException) {
                 ConfigWindowShow();
             } catch (Exception ex) {
@@ -55,37 +56,43 @@ namespace SendMailApp {
         //メール送信処理
         private void btOk_Click(object sender, RoutedEventArgs e) {
             try {
+                Config ctf = Config.GetInstance();
                 MailMessage msg = new MailMessage("ojsinfosys01@gmail.com", tbTo.Text);
+
                 if (tbCc.Text != "") {
                     msg.CC.Add(tbCc.Text);
-                }
-                if (tbBcc.Text != "") {
-                    msg.Bcc.Add(tbCc.Text);
+
+                } else if (tbBcc.Text != "") {
+                    msg.Bcc.Add(tbBcc.Text);
                 }
 
                 msg.Subject = tbTitle.Text;//件名
                 msg.Body = tbBody.Text;//本文
+                try {
+                    foreach (var item in LbAttach.Items) {
+                        msg.Attachments.Add(new Attachment(item.ToString())); ;
+                    }
+                } catch (Exception ex) {
 
-                for (int i = 0; i < LbAttach.Items.Count; i++) {
-                    Attachment attachment = new System.Net.Mail.Attachment(LbAttach.Items[i].ToString());
-                    msg.Attachments.Add(attachment);
+                    MessageBox.Show(ex.Message);
                 }
 
-                sc.Host = "smtp.gmail.com";//SMTPサーバーの設定
-                sc.Port = 587;
-                sc.EnableSsl = true;
-                sc.Credentials = new NetworkCredential("ojsinfosys01@gmail.com", "ojsInfosys2020");
 
-                //sc.Send(msg);
-                sc.SendMailAsync(msg);
+                sc.Host = ctf.Smtp;//SMTPサーバの設定
+                sc.Port = ctf.Port;
+                sc.EnableSsl = ctf.Ssl;
+                sc.Credentials = new NetworkCredential(ctf.MailAddress, ctf.PassWord);
+
+                //sc.Send(msg);//送信
+                sc.SendMailAsync(msg);//送信
 
             } catch (Exception ex) {
                 MessageBox.Show(ex.Message);
             }
         }
 
-        //メールキャンセル処理
-        private void btCancel_Click(object sender, RoutedEventArgs e) {
+            //メールキャンセル処理
+            private void btCancel_Click(object sender, RoutedEventArgs e) {
             sc.SendAsyncCancel();
         }
 
@@ -124,11 +131,13 @@ namespace SendMailApp {
             // ダイアログを表示する
             if (dialog.ShowDialog() == true) {
                 LbAttach.Items.Add(dialog.FileName);
+
                 // 選択されたファイル名 (ファイルパス) をメッセージボックスに表示
                 //MessageBox.Show(dialog.FileName);
             }
         }
 
+        //削除ボタン
         private void btErase_Click(object sender, RoutedEventArgs e) {
             if (LbAttach.SelectedItems.Count == 0) {
                 MessageBox.Show("削除する項目を選択してください。");
